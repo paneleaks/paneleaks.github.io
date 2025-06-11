@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>PRIVATE LEAKS v3.1</title>
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #00ff00;
+            font-family: 'Courier New', monospace;
+            padding: 20px;
+            margin: 0;
+        }
+        .panel {
+            display: flex;
+            flex-direction: row;
+        }
+        .info {
+            width: 70%;
+            padding-right: 20px;
+        }
+        .menu {
+            width: 30%;
+            border-left: 1px solid #00ff00;
+            padding-left: 10px;
+        }
+        button {
+            background: black;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 8px;
+            margin: 5px 0;
+            width: 100%;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #003300;
+        }
+        .log {
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+        .blurred {
+            filter: blur(5px);
+        }
+        .popup {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #ff0044;
+            padding: 15px;
+            border: 1px solid red;
+            z-index: 1000;
+            display: none;
+        }
+        .camera-feed {
+            margin-top: 20px;
+            border: 1px solid #00ff00;
+            padding: 10px;
+            display: none;
+        }
+        input[type="text"] {
+            width: 100%;
+            background: #000;
+            color: #00ff00;
+            border: 1px solid #00ff00;
+            padding: 5px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>PRIVATE LEAKS v3.1</h1>
+    <div class="panel">
+        <div class="info" id="infoPanel">
+            <h3>[✓] TAM ERİŞİM AKTİF</h3>
+            <p><b>AD:</b> Zeynep Yılmaz</p>
+            <p><b>TC:</b> 53022133500</p>
+            <p><b>TEL:</b> 05551234567</p>
+            <p><b>ADRES:</b> Atatürk Mah. No:15/3, İstanbul</p>
+            <p><b>AİLE:</b></p>
+            <ul>
+                <li>Anne: Ayşe Yılmaz</li>
+                <li>Baba: Mehmet Yılmaz</li>
+            </ul>
+            <h4>SON AKTİVİTE:</h4>
+            <div class="log" id="log"></div>
+            <div class="camera-feed" id="cameraFeed">
+                <p>[Kamera görüntüsü akışı simülasyonu]</p>
+            </div>
+        </div>
+        <div class="menu">
+            <h3>MENÜ</h3>
+            <input type="text" id="smsInput" placeholder="SMS içeriği girin...">
+            <button onclick="sendSMS()">SMS BOMB</button>
+            <button onclick="getLocation()">KONUM ÇEK</button>
+            <button onclick="openCamera()">KAMERA AÇ</button>
+            <button onclick="wipeData()">VERİ SİL</button>
+            <p>Çevrimiçi Kullanıcılar: <span id="online">143</span></p>
+        </div>
+    </div>
+
+    <div class="popup" id="popup">VERİ SIZDIRILDI: KAMERA KAYDI PAYLAŞILDI</div>
+
+    <script>
+        const logDiv = document.getElementById("log");
+        const infoPanel = document.getElementById("infoPanel");
+        const cameraFeed = document.getElementById("cameraFeed");
+        const popup = document.getElementById("popup");
+
+        function logAction(text) {
+            const time = new Date().toLocaleTimeString('tr-TR');
+            const entry = document.createElement("p");
+            entry.textContent = `${time} - ${text}`;
+            logDiv.appendChild(entry);
+            logDiv.scrollTop = logDiv.scrollHeight;
+        }
+
+        function sendSMS() {
+            const message = document.getElementById("smsInput").value.trim();
+            if (message) {
+                logAction(`SMS gönderildi: '${message}'`);
+                showPopup();
+            } else {
+                alert("Lütfen bir SMS içeriği girin.");
+            }
+        }
+
+        function getLocation() {
+            const fakeLat = (Math.random() * 90).toFixed(4);
+            const fakeLon = (Math.random() * 180).toFixed(4);
+            logAction(`Konum çekildi: Enlem ${fakeLat}, Boylam ${fakeLon}`);
+        }
+
+        function openCamera() {
+            logAction("Kamera akışı başlatıldı.");
+            cameraFeed.style.display = "block";
+            showPopup("Kamera görüntüsü panelde paylaşıldı");
+        }
+
+        function wipeData() {
+            logAction("Veriler siliniyor...");
+            infoPanel.classList.add("blurred");
+
+            setTimeout(() => {
+                infoPanel.innerHTML = `
+                    <h3>[X] ERİŞİM ENGELLENDİ</h3>
+                    <p>Bu kullanıcının verileri başarıyla silindi.</p>
+                    <p>Dosya sistemi temizlendi.</p>
+                `;
+            }, 2000);
+        }
+
+        function showPopup(message = "VERİ SIZDIRILDI: KAMERA KAYDI PAYLAŞILDI") {
+            popup.textContent = message;
+            popup.style.display = "block";
+            setTimeout(() => {
+                popup.style.display = "none";
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
